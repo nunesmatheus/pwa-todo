@@ -35,8 +35,16 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    const db = openDB('pwa_todo', 1)
+    const db = openDB('pwa_todo', 1, {
+      upgrade(db, oldVersion, newVersion, transaction) {
+        if(!db.objectStoreNames.contains('todos'))
+          db.createObjectStore('todos', { keyPath: 'id', autoIncrement: true })
+      }
+    })
+
     db.then((db) => {
+      if(!db.objectStoreNames.contains('todos'))
+        return []
       const tx = db.transaction('todos')
       const store = tx.objectStore('todos')
       return store.getAll()
@@ -50,22 +58,16 @@ class TodoList extends Component {
       todos: [...this.state.todos, { title: title }],
       new_todo_title: ''
     })
+    this.insertTodo({title: title})
 
-    fetch('http://localhost:3000/todos', {
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({ title: title })
-    })
-    // TODO: Catch failure to insert on API
-      .then((response) => {
-        return response.json()
-      })
-      .then((response) => {
-        this.insertTodo({ id: response.id, title: title })
-      })
+//     fetch('http://localhost:3000/todos', {
+//       headers: {
+//         'Content-type': 'application/json',
+//         'Accept': 'application/json'
+//       },
+//       method: 'POST',
+//       body: JSON.stringify({ title: title })
+//     })
 
     // TODO: Should assert that IndexedDB is available on browser
   }
@@ -74,8 +76,8 @@ class TodoList extends Component {
     const db = openDB('pwa_todo', 1)
     return db.then((db) => {
       const tx = db.transaction('todos', 'readwrite')
-      const store = tx.objectStore('todos')
-      store.put(todo, todo.id)
+      tx.store.put(todo, todo.id)
+      return tx.done
     })
   }
 
