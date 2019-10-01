@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { openDB } from 'idb';
 
+const styles = {
+  todo: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
+}
+
 class Todo extends Component {
   constructor(props) {
     super(props)
@@ -8,7 +16,7 @@ class Todo extends Component {
 
   render() {
     return(
-      <div className="todo" key={`todo-${this.props.i}`}>
+      <div className="todo" key={`todo-${this.props.i}`} style={styles.todo}>
         <span>{this.props.title}</span>
         <span className="remove-action" onClick={this.remove.bind(this)}>Excluir</span>
       </div>
