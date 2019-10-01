@@ -5,7 +5,8 @@ const styles = {
   todo: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    padding: 12
   }
 }
 
@@ -18,7 +19,8 @@ class Todo extends Component {
     return(
       <div className="todo" key={`todo-${this.props.i}`} style={styles.todo}>
         <span>{this.props.title}</span>
-        <span className="remove-action" onClick={this.remove.bind(this)}>Excluir</span>
+        <span className="remove-action" style={{fontWeight: 'bold'}}
+          onClick={this.remove.bind(this)}>Excluir</span>
       </div>
     )
   }
