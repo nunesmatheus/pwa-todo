@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { openDB } from 'idb';
+import Todo from './Todo';
 
 class TodoList extends Component {
   constructor(props) {
@@ -26,11 +27,7 @@ class TodoList extends Component {
 
         <div className="todos">
           {this.state.todos.map((todo, i) => {
-            return(
-              <div className="todo" key={`todo-${i}`}>
-                <span>{todo.title}</span>
-              </div>
-            )
+            return <Todo id={todo.id} title={todo.title} key={i} removeTodoById={this.removeTodoById.bind(this)} />
           })}
         </div>
       </main>
@@ -62,6 +59,7 @@ class TodoList extends Component {
       method: 'POST',
       body: JSON.stringify({ title: title })
     })
+    // TODO: Catch failure to insert on API
       .then((response) => {
         return response.json()
       })
@@ -74,11 +72,16 @@ class TodoList extends Component {
 
   insertTodo(todo) {
     const db = openDB('pwa_todo', 1)
-    db.then((db) => {
+    return db.then((db) => {
       const tx = db.transaction('todos', 'readwrite')
       const store = tx.objectStore('todos')
       store.put(todo, todo.id)
     })
+  }
+
+  removeTodoById(id) {
+    const new_todos = this.state.todos.filter(todo => todo.id !== id)
+    this.setState({ todos: new_todos })
   }
 }
 
