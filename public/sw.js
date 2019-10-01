@@ -27,7 +27,7 @@ createDb = () => {
     upgrade(db, oldVersion, newVersion, transaction) {
       console.log(db)
       if(!db.objectStoreNames.contains('todos'))
-        db.createObjectStore('todos', { keyPath: 'id', autoIncrement: true })
+        db.createObjectStore('todos')
     }
   })
 }

@@ -38,8 +38,12 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    this.getTodos().
-      then((todos) => { this.setState({ todos: todos }) })
+    const db = openDB('pwa_todo', 1)
+    db.then((db) => {
+      const tx = db.transaction('todos')
+      const store = tx.objectStore('todos')
+      return store.getAll()
+    }).then((todos) => { this.setState({ todos: todos }) } )
   }
 
   handleSubmit(event) {
@@ -68,14 +72,15 @@ class TodoList extends Component {
     // TODO: Should assert that IndexedDB is available on browser
   }
 
-  async insertTodo(todo) {
-    const db = await openDB('pwa_todo', 1)
-    await db.add('todos', todo);
-  }
-
-  async getTodos() {
-    const db = await openDB('pwa_todo', 1)
-    return await db.getAll('todos')
+  insertTodo(todo) {
+    const db = openDB('pwa_todo', 1)
+    db.then((db) => {
+      const tx = db.transaction('todos', 'readwrite')
+      const store = tx.objectStore('todos')
+      store.put(todo, todo.id)
+    }).
+      then(() => { console.log('insert success!') }).
+      catch(() => { console.log('insert failed!') })
   }
 }
 
