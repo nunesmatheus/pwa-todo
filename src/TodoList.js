@@ -71,10 +71,10 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    const db = openDB('pwa_todo', 1, {
+    const db = openDB('pwa_todo', 2, {
       upgrade(db, oldVersion, newVersion, transaction) {
         if(!db.objectStoreNames.contains('todos'))
-          db.createObjectStore('todos', { keyPath: 'id', autoIncrement: true })
+          db.createObjectStore('todos')
       }
     })
 
@@ -90,30 +90,20 @@ class TodoList extends Component {
   handleSubmit(event) {
     event.preventDefault()
     const title = this.state.new_todo_title
-    this.setState({
-      todos: [...this.state.todos, { title: title }],
-      new_todo_title: ''
+    this.insertTodo({ title: title }).then((idb_id) => {
+      this.setState({
+        todos: [...this.state.todos, { id: idb_id, title: title }],
+        new_todo_title: ''
+      })
     })
-    this.insertTodo({title: title})
-
-//     fetch('http://localhost:3000/todos', {
-//       headers: {
-//         'Content-type': 'application/json',
-//         'Accept': 'application/json'
-//       },
-//       method: 'POST',
-//       body: JSON.stringify({ title: title })
-//     })
-
-    // TODO: Should assert that IndexedDB is available on browser
   }
 
   insertTodo(todo) {
-    const db = openDB('pwa_todo', 1)
+    // TODO: Should assert that IndexedDB is available on browser
+    const db = openDB('pwa_todo', 2)
     return db.then((db) => {
       const tx = db.transaction('todos', 'readwrite')
-      tx.store.put(todo, todo.id)
-      return tx.done
+      return tx.store.add(todo)
     })
   }
 
