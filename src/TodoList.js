@@ -66,7 +66,7 @@ class TodoList extends Component {
         return response.json()
       })
       .then((response) => {
-        this.insertTodo({id: response.id, title: title})
+        this.insertTodo({ id: response.id, title: title })
       })
 
     // TODO: Should assert that IndexedDB is available on browser
@@ -78,9 +78,7 @@ class TodoList extends Component {
       const tx = db.transaction('todos', 'readwrite')
       const store = tx.objectStore('todos')
       store.put(todo, todo.id)
-    }).
-      then(() => { console.log('insert success!') }).
-      catch(() => { console.log('insert failed!') })
+    })
   }
 }
 

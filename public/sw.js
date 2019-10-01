@@ -17,15 +17,12 @@ self.addEventListener('fetch', (e) => {
 })
 
 self.addEventListener('activate', (e) => {
-  console.log('service worker activated ')
   e.waitUntil(createDb())
 })
 
 createDb = () => {
-  console.log('opening DB!!')
   idb.openDB('pwa_todo', 1, {
     upgrade(db, oldVersion, newVersion, transaction) {
-      console.log(db)
       if(!db.objectStoreNames.contains('todos'))
         db.createObjectStore('todos')
     }
