@@ -6,7 +6,10 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 12
+    padding: '20px 14px',
+    backgroundColor: '#1d1d1d',
+    borderBottom: '1px solid #242424',
+    color: 'white'
   }
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { openDB } from 'idb';
 import TodoList from './TodoList';
 import arrayMove from 'array-move';
+import './TodoIndex.css';
 
 class TodoIndex extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class TodoIndex extends Component {
     const form_transform = this.state.show_new_form ? '' : 'translateY(100px)'
     const form_wrapper_style = {...styles.new_form_wrapper, transform: form_transform}
     return(
-      <main>
+      <main style={{backgroundColor: '#242424'}}>
         <TodoList
           todos={this.state.todos}
           onSortEnd={this.onSortEnd.bind(this)}
