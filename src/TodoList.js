@@ -6,7 +6,7 @@ const SortableItem = SortableElement(({todo, removeTodoById}) => <Todo id={todo.
 
 const SortableList = SortableContainer(({items, removeTodoById}) => {
   return (
-    <div className="todos">
+    <div className="todos" style={{overflowY: 'scroll'}}>
       {items.map((todo, index) => (
         <SortableItem key={`item-${index}`} index={index} todo={todo} removeTodoById={removeTodoById} />
       ))}
