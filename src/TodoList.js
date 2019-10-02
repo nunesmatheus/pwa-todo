@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import iNoBounce from 'inobounce';
 
 const SortableItem = SortableElement(({todo, removeTodoById}) => <Todo id={todo.id} title={todo.title} removeTodoById={removeTodoById} />);
 
@@ -28,7 +29,6 @@ class TodoList extends Component {
     return(
       <SortableList
         lockAxis='y'
-        transitionDuration={0}
         pressThreshold={20}
         pressDelay={200}
         items={this.props.todos}
