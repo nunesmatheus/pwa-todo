@@ -27,7 +27,10 @@ class TodoList extends Component {
   render() {
     return(
       <SortableList
+        transitionDuration={0}
+        pressThreshold={20}
         pressDelay={200}
+        useWindowAsScrollContainer={true}
         items={this.props.todos}
         removeTodoById={this.props.removeTodoById}
         onSortEnd={this.props.onSortEnd} />
