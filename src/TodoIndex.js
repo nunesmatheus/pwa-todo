@@ -17,7 +17,7 @@ class TodoIndex extends Component {
   }
 
   render() {
-    const form_transform = this.state.show_new_form ? '' : 'translateY(100px)'
+    const form_transform = this.state.show_new_form ? '' : 'translateY(100%)'
     const form_wrapper_style = {...styles.new_form_wrapper, transform: form_transform}
     return(
       <main>
