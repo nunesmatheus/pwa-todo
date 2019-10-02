@@ -27,7 +27,7 @@ class TodoList extends Component {
   render() {
     return(
       <SortableList
-        distance={1}
+        pressDelay={200}
         items={this.props.todos}
         removeTodoById={this.props.removeTodoById}
         onSortEnd={this.props.onSortEnd} />
