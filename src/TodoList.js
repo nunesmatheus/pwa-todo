@@ -7,7 +7,7 @@ const SortableItem = SortableElement(({todo, removeTodoById}) => <Todo id={todo.
 
 const SortableList = SortableContainer(({items, removeTodoById}) => {
   return (
-    <div className="todos" style={{overflowY: 'scroll', height: '100vh'}}>
+    <div className="todos" style={styles.todos_wrapper}>
       {items.map((todo, index) => (
         <SortableItem key={`item-${index}`} index={index} todo={todo} removeTodoById={removeTodoById} />
       ))}
@@ -35,6 +35,15 @@ class TodoList extends Component {
         removeTodoById={this.props.removeTodoById}
         onSortEnd={this.props.onSortEnd} />
     )
+  }
+}
+
+const styles ={
+  todos_wrapper: {
+    overflowY: 'scroll',
+    height: '100vh',
+    backgroundColor: '#242424',
+    paddingBottom: 90
   }
 }
 

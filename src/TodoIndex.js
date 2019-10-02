@@ -4,6 +4,7 @@ import TodoList from './TodoList';
 import arrayMove from 'array-move';
 import './TodoIndex.css';
 import CloseIcon from '@material-ui/icons/Close';
+import AddIcon from '@material-ui/icons/Add';
 
 class TodoIndex extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class TodoIndex extends Component {
     const form_transform = this.state.show_new_form ? '' : 'translateY(100px)'
     const form_wrapper_style = {...styles.new_form_wrapper, transform: form_transform}
     return(
-      <main style={{backgroundColor: '#242424'}}>
+      <main>
         <TodoList
           todos={this.state.todos}
           onSortEnd={this.onSortEnd.bind(this)}
@@ -28,7 +29,7 @@ class TodoIndex extends Component {
         <span
           onClick={() => {this.setState({ show_new_form: true }); this.todoTitleInput.focus()}}
           style={styles.open_form_button}
-        >+</span>
+        ><AddIcon style={{fill: 'white', fontSize: 30}} /></span>
 
         <div style={form_wrapper_style}>
           <form onSubmit={this.handleSubmit.bind(this)} style={styles.new_form}>
@@ -146,14 +147,14 @@ const styles = {
     fontWeight: 'bold',
     backgroundColor: '#e53232',
     borderRadius: '50%',
-    width: 30,
-    height: 30,
+    width: 50,
+    height: 50,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'fixed',
     right: 20,
-    bottom: 20
+    bottom: 20,
   }
 }
 
