@@ -6,12 +6,13 @@ const styles = {
   new_form_wrapper: {
     position: 'fixed',
     width: '100%',
-    bottom: 0,
+    bottom: '-100px',
     padding: '16px 12px',
     backgroundColor: '#2a2a2a',
     boxSizing: 'border-box',
     borderTopLeftRadius: 5,
-    borderTopRightRadius: 5
+    borderTopRightRadius: 5,
+    transition: 'bottom 0.1s ease-in'
   },
   new_form: {
     display: 'flex',
@@ -36,6 +37,19 @@ const styles = {
     border: 'none',
     borderRadius: 5,
     fontWeight: 'bold'
+  },
+  open_form_button: {
+    fontWeight: 'bold',
+    backgroundColor: '#e53232',
+    borderRadius: '50%',
+    width: 30,
+    height: 30,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'fixed',
+    right: 20,
+    bottom: 20
   }
 }
 
@@ -44,11 +58,14 @@ class TodoList extends Component {
     super(props)
     this.state = {
       todos: [],
-      new_todo_title: ''
+      new_todo_title: '',
+      show_new_form: false
     }
   }
 
   render() {
+    const form_bottom = this.state.show_new_form ? '0px' : '-100px'
+    const form_wrapper_style = {...styles.new_form_wrapper, bottom: form_bottom}
     return(
       <main>
         <div className="todos">
@@ -57,7 +74,12 @@ class TodoList extends Component {
           })}
         </div>
 
-        <div style={styles.new_form_wrapper}>
+        <span
+          onClick={() => {this.setState({ show_new_form: true })}}
+          style={styles.open_form_button}
+        >+</span>
+
+        <div style={form_wrapper_style}>
           <form onSubmit={this.handleSubmit.bind(this)} style={styles.new_form}>
             <input
               id="todo_title" type="text" style={styles.title_input}
