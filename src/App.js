@@ -1,11 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import TodoList from './TodoList';
+import TodoIndex from './TodoIndex';
 
 function App() {
   return (
-    <TodoList />
+    <TodoIndex />
   );
 }
 

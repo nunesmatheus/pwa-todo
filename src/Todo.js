@@ -11,21 +11,19 @@ const styles = {
 }
 
 class Todo extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     return(
-      <div className="todo" key={`todo-${this.props.i}`} style={styles.todo}>
+      <div className="todo" style={styles.todo}>
         <span>{this.props.title}</span>
-        <span className="remove-action" style={{fontWeight: 'bold'}}
+        <span style={{fontWeight: 'bold'}}
           onClick={this.remove.bind(this)}>Excluir</span>
       </div>
     )
   }
 
   remove() {
+    console.log('teste')
     const removeTodoById = this.props.removeTodoById
     const db = openDB('pwa_todo', 2)
     db.then((db) => {
