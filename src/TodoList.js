@@ -12,7 +12,8 @@ const styles = {
     boxSizing: 'border-box',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
-    transition: 'transform 0.1s ease-in'
+    transition: 'transform 0.1s ease-in',
+    willChange: 'transform'
   },
   new_form: {
     display: 'flex',
