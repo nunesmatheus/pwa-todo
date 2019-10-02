@@ -3,6 +3,7 @@ import { openDB } from 'idb';
 import TodoList from './TodoList';
 import arrayMove from 'array-move';
 import './TodoIndex.css';
+import CloseIcon from '@material-ui/icons/Close';
 
 class TodoIndex extends Component {
   constructor(props) {
@@ -25,16 +26,21 @@ class TodoIndex extends Component {
           removeTodoById={this.removeTodoById.bind(this)} />
 
         <span
-          onClick={() => {this.setState({ show_new_form: true })}}
+          onClick={() => {this.setState({ show_new_form: true }); this.todoTitleInput.focus()}}
           style={styles.open_form_button}
         >+</span>
 
         <div style={form_wrapper_style}>
           <form onSubmit={this.handleSubmit.bind(this)} style={styles.new_form}>
-            <input
-              id="todo_title" type="text" style={styles.title_input}
-              onChange={(event) => { this.setState({ new_todo_title: event.target.value }) }}
-              value={this.state.new_todo_title} />
+            <div style={{display: 'flex'}}>
+              <input
+                ref={(input) => {this.todoTitleInput = input}}
+                id="todo_title" type="text" style={styles.title_input}
+                onChange={(event) => { this.setState({ new_todo_title: event.target.value }) }}
+                value={this.state.new_todo_title} />
+              <CloseIcon style={{fill: 'white', marginLeft: 10}}
+                onClick={() => { this.setState({ show_new_form: false }) }} />
+            </div>
             <input type="submit" value="Adicionar" style={styles.add_button} />
           </form>
         </div>
