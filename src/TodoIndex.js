@@ -23,8 +23,7 @@ class TodoIndex extends Component {
       <main>
         <TodoList
           todos={this.state.todos}
-          onSortEnd={this.onSortEnd.bind(this)}
-          removeTodoById={this.removeTodoById.bind(this)} />
+          onSortEnd={this.onSortEnd.bind(this)} />
 
         <span
           onClick={() => {this.setState({ show_new_form: true }); this.todoTitleInput.focus()}}
@@ -87,11 +86,6 @@ class TodoIndex extends Component {
       const tx = db.transaction('todos', 'readwrite')
       return tx.store.put(todo)
     })
-  }
-
-  removeTodoById(id) {
-    const new_todos = this.state.todos.filter(todo => todo.id !== id)
-    this.setState({ todos: new_todos })
   }
 
   onSortEnd({oldIndex, newIndex}) {

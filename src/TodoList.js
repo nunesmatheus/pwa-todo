@@ -3,13 +3,13 @@ import Todo from './Todo';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import iNoBounce from 'inobounce';
 
-const SortableItem = SortableElement(({todo, removeTodoById}) => <Todo id={todo.id} title={todo.title} removeTodoById={removeTodoById} />);
+const SortableItem = SortableElement(({todo}) => <Todo id={todo.id} title={todo.title} />);
 
-const SortableList = SortableContainer(({items, removeTodoById}) => {
+const SortableList = SortableContainer(({items}) => {
   return (
     <div className="todos" style={styles.todos_wrapper}>
       {items.map((todo, index) => (
-        <SortableItem key={`item-${index}`} index={index} todo={todo} removeTodoById={removeTodoById} />
+        <SortableItem key={`item-${index}`} index={index} todo={todo} />
       ))}
     </div>
   );
@@ -32,7 +32,6 @@ class TodoList extends Component {
         pressThreshold={20}
         pressDelay={200}
         items={this.props.todos}
-        removeTodoById={this.props.removeTodoById}
         onSortEnd={this.props.onSortEnd} />
     )
   }
