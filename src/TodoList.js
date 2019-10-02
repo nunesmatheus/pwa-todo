@@ -6,13 +6,13 @@ const styles = {
   new_form_wrapper: {
     position: 'fixed',
     width: '100%',
-    bottom: '-100px',
+    bottom: '0',
     padding: '16px 12px',
     backgroundColor: '#2a2a2a',
     boxSizing: 'border-box',
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
-    transition: 'bottom 0.1s ease-in'
+    transition: 'transform 0.1s ease-in'
   },
   new_form: {
     display: 'flex',
@@ -64,8 +64,8 @@ class TodoList extends Component {
   }
 
   render() {
-    const form_bottom = this.state.show_new_form ? '0px' : '-100px'
-    const form_wrapper_style = {...styles.new_form_wrapper, bottom: form_bottom}
+    const form_transform = this.state.show_new_form ? '' : 'translateY(100px)'
+    const form_wrapper_style = {...styles.new_form_wrapper, transform: form_transform}
     return(
       <main>
         <div className="todos">
