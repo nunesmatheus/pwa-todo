@@ -3,7 +3,6 @@ import { openDB } from 'idb';
 import TodoList from './TodoList';
 import arrayMove from 'array-move';
 import './TodoIndex.css';
-import iNoBounce from 'inobounce';
 
 class TodoIndex extends Component {
   constructor(props) {
@@ -44,8 +43,6 @@ class TodoIndex extends Component {
   }
 
   componentDidMount() {
-    iNoBounce.enable()
-
     const db = openDB('pwa_todo', 5, {
       upgrade(db, oldVersion, newVersion, transaction) {
         if(!db.objectStoreNames.contains('todos'))

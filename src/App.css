@@ -31,7 +31,9 @@ h1, h2, h3, h4, h5, h6, p, span {
 }
 
 body {
-  height: 100%;
-  overflow: auto;
-  overflow-scrolling: touch;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
 }

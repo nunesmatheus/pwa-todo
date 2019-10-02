@@ -8,8 +8,7 @@
     "react-scripts": "3.1.2",
     "idb": "4.0.4",
     "react-sortable-hoc": "1.10.1",
-    "array-move": "2.1.0",
-    "inobounce": "0.2.0"
+    "array-move": "2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
