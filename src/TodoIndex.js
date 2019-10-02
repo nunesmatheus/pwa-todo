@@ -43,10 +43,10 @@ class TodoIndex extends Component {
   }
 
   componentDidMount() {
-    const db = openDB('pwa_todo', 2, {
+    const db = openDB('pwa_todo', 5, {
       upgrade(db, oldVersion, newVersion, transaction) {
         if(!db.objectStoreNames.contains('todos'))
-          db.createObjectStore('todos')
+          db.createObjectStore('todos', {keyPath: 'id', autoIncrement: true})
       }
     })
 
@@ -75,7 +75,7 @@ class TodoIndex extends Component {
 
   insertTodo(todo) {
     // TODO: Should assert that IndexedDB is available on browser
-    const db = openDB('pwa_todo', 2)
+    const db = openDB('pwa_todo', 5)
     return db.then((db) => {
       const tx = db.transaction('todos', 'readwrite')
       return tx.store.put(todo)

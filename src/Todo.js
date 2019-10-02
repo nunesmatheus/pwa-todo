@@ -26,9 +26,8 @@ class Todo extends Component {
   }
 
   remove() {
-    console.log('teste')
     const removeTodoById = this.props.removeTodoById
-    const db = openDB('pwa_todo', 2)
+    const db = openDB('pwa_todo', 5)
     db.then((db) => {
       const tx = db.transaction('todos', 'readwrite')
       const store = tx.objectStore('todos')
