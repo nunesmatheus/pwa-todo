@@ -27,6 +27,7 @@ class TodoList extends Component {
   render() {
     return(
       <SortableList
+        lockAxis='y'
         transitionDuration={0}
         pressThreshold={20}
         pressDelay={200}
