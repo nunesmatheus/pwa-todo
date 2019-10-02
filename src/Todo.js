@@ -25,7 +25,6 @@ class Todo extends Component {
   }
 
   render() {
-    console.log(`hide: ${this.state.hide}`)
     const height = this.state.hide ? 0 : 'auto'
     const style = {...styles.todo, height: height}
     if(this.state.hide) style.padding = 0
