@@ -6,7 +6,7 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
   /\.(?:css|js)$/,
-  new workbox.strategies.cacheFirst()
+  new workbox.strategies.CacheFirst()
 )
 
 workbox.routing.registerRoute(
