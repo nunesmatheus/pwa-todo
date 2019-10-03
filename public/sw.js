@@ -1,24 +1,13 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
 workbox.routing.registerRoute(
-  '/', new workbox.strategies.StaleWhileRevalidate()
-);
+  '/', new workbox.strategies.networkFirst()
+)
 
 workbox.routing.registerRoute(
-  /\.js$/,
-  new workbox.strategies.StaleWhileRevalidate()
-);
-
-workbox.routing.registerRoute(
-  // Cache CSS files.
-  /\.css$/,
-  // Use cache but update in the background.
-  new workbox.strategies.StaleWhileRevalidate({
-    // Use a custom cache name.
-    cacheName: 'css-cache',
-  })
-);
-
+  /\.(?:css|js)$/,
+  new workbox.strategies.cacheFirst()
+)
 
 workbox.routing.registerRoute(
   // Cache image files.
@@ -36,4 +25,4 @@ workbox.routing.registerRoute(
       })
     ],
   })
-);
+)
