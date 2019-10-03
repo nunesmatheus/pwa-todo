@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Icon from '@mdi/react'
 import { mdiCloseCircle, mdiCheckCircle } from '@mdi/js'
 import autosize from 'autosize';
+import { closest } from './utils';
 
 class Todo extends Component {
 
@@ -15,7 +16,8 @@ class Todo extends Component {
     this.state = {
       hide: false,
       editing: false,
-      title: props.title
+      title: props.title,
+      showing_actions: false
     }
   }
 
@@ -28,16 +30,18 @@ class Todo extends Component {
       title_style = { display: 'none' }
       input_style = {}
     } else {
-      title_style = {}
+      title_style = { flexGrow: 1 }
       input_style = { display: 'none' }
     }
 
     let actions_style = styles.actions_inner_wrapper
     if(this.state.editing)
       actions_style = {...actions_style, transform: 'translateY(-25px)'}
+    if(this.state.showing_actions)
+      actions_style = {...actions_style, opacity: 1}
 
     return(
-      <div className="todo" style={style}>
+      <div className="todo" style={style} onClick={this.toggleActions.bind(this)}>
         <span style={title_style}>{this.props.title}</span>
 
         <form onSubmit={this.handleEdit.bind(this)}>
@@ -49,22 +53,20 @@ class Todo extends Component {
           <input type="submit" value="Editar" style={{display: 'none'}} />
         </form>
 
-        <div style={styles.actions_wrapper}>
+        <div style={styles.actions_wrapper} className="actions-wrapper">
           <div style={actions_style}>
             <div style={{display: 'flex'}}>
-              <EditIcon onClick={() => {
-                  this.setState({ editing: !this.state.editing },
-                    () => { this.titleInput.focus(); this.titleInput.setSelectionRange(this.titleInput.value.length,this.titleInput.value.length) }) }}
+              <EditIcon onClick={() => { this.executeAction(this.enableEdit.bind(this)) }}
                 style={{marginRight: 10}}
               />
-              <DeleteIcon onClick={this.remove.bind(this)}/>
+              <DeleteIcon onClick={() => { this.executeAction(this.remove.bind(this)) }} />
             </div>
             <div style={{display: 'flex'}}>
               <Icon path={mdiCloseCircle} size={1}
-                onClick={() => {this.setState({ editing: false, title: this.props.title })}}
+                onClick={() => { this.executeAction(this.cancelEdit.bind(this)) }}
                 style={{fill: 'white', height: '1.5rem', flexShrink: 0, marginRight: 10}} />
               <Icon path={mdiCheckCircle} size={1}
-                onClick={this.handleEdit.bind(this)}
+                onClick={() => { this.executeAction(this.handleEdit.bind(this)) }}
                 style={{fill: 'white', height: '1.5rem', flexShrink: 0}} />
             </div>
           </div>
@@ -76,6 +78,33 @@ class Todo extends Component {
   componentDidUpdate(prevProps, prevState) {
     if(this.state.editing)
       this.titleInput.style.height = `${this.titleInput.scrollHeight}px`
+  }
+
+  executeAction(action) {
+    if(!this.state.showing_actions) return
+    action()
+  }
+
+  toggleActions(event) {
+    const action_click = !!closest(event.target, '.actions-wrapper')
+    if(action_click && this.state.showing_actions) return
+    this.setState({ showing_actions: !this.state.showing_actions })
+  }
+
+  enableEdit() {
+    this.setState({
+      editing: !this.state.editing
+    }, () => {
+      this.titleInput.focus()
+      this.titleInput.setSelectionRange(this.titleInput.value.length,
+        this.titleInput.value.length)
+    })
+  }
+
+  cancelEdit() {
+    this.setState({
+      editing: false, title: this.props.title
+    })
   }
 
   remove() {
@@ -140,7 +169,9 @@ const styles = {
     flexWrap: 'nowrap',
     transition: 'transform 0.1s ease-out',
     flexDirection: 'column',
-    willChange: 'transform'
+    transitionProperty: 'transform, opacity',
+    willChange: 'transform, opacity',
+    opacity: 0
   },
   icon: {
     width: '1em',
