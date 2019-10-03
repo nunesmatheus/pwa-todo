@@ -5,12 +5,13 @@ import arrayMove from 'array-move';
 import './TodoIndex.css';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
+import * as idbu from './IDBUtilities';
+import { connect } from 'react-redux';
 
 class TodoIndex extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      todos: [],
       new_todo_title: '',
       show_new_form: false
     }
@@ -22,7 +23,7 @@ class TodoIndex extends Component {
     return(
       <main>
         <TodoList
-          todos={this.state.todos}
+          todos={this.props.todos}
           onSortEnd={this.onSortEnd.bind(this)} />
 
         <span
@@ -64,27 +65,18 @@ class TodoIndex extends Component {
       return store.getAll()
     }).then((todos) => {
       todos.sort((a,b) => a.index - b.index)
-      this.setState({ todos: todos })
+      this.props.dispatch({ type: 'SET TODOS', todos: todos })
     })
   }
 
   handleSubmit(event) {
     event.preventDefault()
     const title = this.state.new_todo_title
-    this.insertTodo({ title: title }).then((idb_id) => {
+    idbu.insert('todos', { title: title }).then((idb_id) => {
       this.setState({
-        todos: [...this.state.todos, { id: idb_id, title: title }],
+        todos: [...this.props.todos, { id: idb_id, title: title }],
         new_todo_title: ''
       })
-    })
-  }
-
-  insertTodo(todo) {
-    // TODO: Should assert that IndexedDB is available on browser
-    const db = openDB('pwa_todo', 5)
-    return db.then((db) => {
-      const tx = db.transaction('todos', 'readwrite')
-      return tx.store.put(todo)
     })
   }
 
@@ -92,11 +84,21 @@ class TodoIndex extends Component {
     this.setState(({todos}) => ({
       todos: arrayMove(todos, oldIndex, newIndex)
     }), () => {
-      this.state.todos.map((todo, index) => {
+      this.props.todos.map((todo, index) => {
         todo.index = index
-        this.insertTodo(todo)
+        idbu.insert('todos', todo)
       })
     })
+  }
+
+  updateTodo(new_todo) {
+    const todos = this.props.todos.map((todo) => {
+      if(todo.id !== new_todo.id) return todo
+      todo.title = new_todo.title
+      return todo
+    })
+
+    this.setState({ todos: todos })
   }
 }
 
@@ -152,4 +154,8 @@ const styles = {
   }
 }
 
-export default TodoIndex;
+const mapStateToProps = state => {
+  return { todos: state.todos }
+}
+
+export default connect(mapStateToProps)(TodoIndex);

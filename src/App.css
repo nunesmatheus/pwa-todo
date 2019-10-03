@@ -40,3 +40,7 @@ input {
   appearance: none;
 }
 
+
+*:focus {
+  outline: 0;
+}
