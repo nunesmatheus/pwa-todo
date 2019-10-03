@@ -32,7 +32,7 @@ class Todo extends Component {
       input_style = { display: 'none' }
     }
 
-    let actions_style = {display: 'flex', flexWrap: 'nowrap', transition: 'transform 0.1s ease-out', flexDirection: 'column'}
+    let actions_style = styles.actions_inner_wrapper
     if(this.state.editing)
       actions_style = {...actions_style, transform: 'translateY(-25px)'}
 
@@ -119,6 +119,7 @@ const styles = {
     color: 'white',
     transition: 'height 0.1s ease-out',
     transitionProperty: 'height, padding',
+    willChange: 'height, padding',
     overflow: 'hidden'
   },
   input: {
@@ -134,12 +135,20 @@ const styles = {
     height: 25,
     overflow: 'hidden'
   },
+  actions_inner_wrapper: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    transition: 'transform 0.1s ease-out',
+    flexDirection: 'column',
+    willChange: 'transform'
+  },
   icon: {
     width: '1em',
     height: '1em',
     display: 'inline-block',
     fontSize: '1.5rem',
     transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    willChange: 'fill',
     flexShrink: '0',
     userSelect: 'none'
   }
