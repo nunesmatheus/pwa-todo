@@ -61,7 +61,7 @@ class Todo extends Component {
             </div>
             <div style={{display: 'flex'}}>
               <Icon path={mdiCloseCircle} size={1}
-                onClick={() => {this.setState({ editing: false })}}
+                onClick={() => {this.setState({ editing: false, title: this.props.title })}}
                 style={{fill: 'white', height: '1.5rem', flexShrink: 0, marginRight: 10}} />
               <Icon path={mdiCheckCircle} size={1}
                 onClick={this.handleEdit.bind(this)}
