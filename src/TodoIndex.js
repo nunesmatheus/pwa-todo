@@ -73,7 +73,7 @@ class TodoIndex extends Component {
     event.preventDefault()
     const title = this.state.new_todo_title
     idbu.insert('todos', { title: title }).then((idb_id) => {
-      this.setState({ new_todo_title: '' })
+      this.setState({ new_todo_title: '', show_new_form: false })
       this.props.dispatch({
         type: 'SET TODOS',
         todos: [...this.props.todos, { id: idb_id, title: title }]
