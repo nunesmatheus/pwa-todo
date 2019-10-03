@@ -10,6 +10,11 @@ workbox.routing.registerRoute(
 )
 
 workbox.routing.registerRoute(
+  /\/manifest.json$/,
+  new workbox.strategies.StaleWhileRevalidate()
+)
+
+workbox.routing.registerRoute(
   // Cache image files.
   /\.(?:png|jpg|jpeg|svg|gif)$/,
   // Use the cache if it's available.
