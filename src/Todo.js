@@ -35,6 +35,7 @@ class Todo extends Component {
 
         <form onSubmit={this.handleEdit.bind(this)}>
           <input
+            style={{padding: 0}}
             ref={(input) => {this.titleInput = input}}
             type="text" style={{...styles.input, ...input_style}}
             onChange={(event) => { this.setState({ title: event.target.value }) }}
