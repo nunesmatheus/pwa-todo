@@ -22,7 +22,7 @@ class Todo extends Component {
   render() {
     const height = this.state.hide ? 0 : 'auto'
     const style = {...styles.todo, height: height}
-    if(this.state.hide) style.padding = 0
+    if(this.state.hide) style.padding = '0 14px'
     let input_style, title_style
     if(this.state.editing) {
       title_style = { display: 'none' }
