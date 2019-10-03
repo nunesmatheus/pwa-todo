@@ -43,7 +43,7 @@ class Todo extends Component {
       <div className="todo" style={style} onClick={this.toggleActions.bind(this)}>
         <span style={title_style}>{this.props.title}</span>
 
-        <form onSubmit={this.handleEdit.bind(this)}>
+        <form onSubmit={this.handleEdit.bind(this)} style={{flexGrow: 1}}>
           <textarea
             ref={(input) => {this.titleInput = input}}
             type="text" style={{...styles.input, ...input_style, padding: 0, resize: 'none'}}
@@ -65,7 +65,7 @@ class Todo extends Component {
                 onClick={() => { this.executeAction(this.cancelEdit.bind(this)) }}
                 style={{fill: 'white', height: '1.5rem', flexShrink: 0, marginRight: 10}} />
               <Icon path={mdiCheckCircle} size={1}
-                onClick={() => { this.executeAction(this.handleEdit.bind(this)) }}
+                onClick={(event) => { this.executeAction(this.handleEdit.bind(this), event) }}
                 style={{fill: 'white', height: '1.5rem', flexShrink: 0}} />
             </div>
           </div>
@@ -79,9 +79,9 @@ class Todo extends Component {
       this.titleInput.style.height = `${this.titleInput.scrollHeight}px`
   }
 
-  executeAction(action) {
+  executeAction(action, event) {
     if(!this.state.showing_actions) return
-    action()
+    action(event)
   }
 
   toggleActions(event) {
@@ -155,7 +155,8 @@ const styles = {
     background: 'none',
     border: 'none',
     color: 'white',
-    height: 18
+    height: 18,
+    width: '100%'
   },
   actions_wrapper: {
     flexShrink: 0,

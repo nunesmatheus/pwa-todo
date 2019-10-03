@@ -39,9 +39,6 @@ class TodoList extends Component {
 const styles ={
   todos_wrapper: {
     overflowY: 'scroll',
-    height: '100vh',
-    backgroundColor: '#242424',
-    paddingBottom: 100,
     boxSizing: 'border-box'
   }
 }
