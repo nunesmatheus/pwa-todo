@@ -86,6 +86,7 @@ class Todo extends Component {
 
   toggleActions(event) {
     const action_click = !!closest(event.target, '.actions-wrapper')
+    if(event.target.tagName == 'TEXTAREA') return
     if(action_click && this.state.showing_actions) return
     this.setState({ showing_actions: !this.state.showing_actions })
   }
