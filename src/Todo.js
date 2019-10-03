@@ -4,6 +4,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import * as idbu from './IDBUtilities';
 import { connect } from 'react-redux';
+import Icon from '@mdi/react'
+import { mdiCloseCircle, mdiCheckCircle } from '@mdi/js'
+import autosize from 'autosize';
 
 class Todo extends Component {
 
@@ -29,30 +32,50 @@ class Todo extends Component {
       input_style = { display: 'none' }
     }
 
+    let actions_style = {display: 'flex', flexWrap: 'nowrap', transition: 'transform 0.1s ease-out', flexDirection: 'column'}
+    if(this.state.editing)
+      actions_style = {...actions_style, transform: 'translateY(-25px)'}
+
     return(
       <div className="todo" style={style}>
         <span style={title_style}>{this.props.title}</span>
 
         <form onSubmit={this.handleEdit.bind(this)}>
-          <input
-            style={{padding: 0}}
+          <textarea
             ref={(input) => {this.titleInput = input}}
-            type="text" style={{...styles.input, ...input_style}}
+            type="text" style={{...styles.input, ...input_style, padding: 0, resize: 'none'}}
             onChange={(event) => { this.setState({ title: event.target.value }) }}
             value={this.state.title} />
           <input type="submit" value="Editar" style={{display: 'none'}} />
         </form>
 
-        <div style={{flexShrink: 0, marginLeft: 10}}>
-          <EditIcon onClick={() => {
-              this.setState({ editing: !this.state.editing },
-                () => { this.titleInput.focus() }) }}
-            style={{marginRight: 10}}
-          />
-          <DeleteIcon onClick={this.remove.bind(this)}/>
+        <div style={styles.actions_wrapper}>
+          <div style={actions_style}>
+            <div style={{display: 'flex'}}>
+              <EditIcon onClick={() => {
+                  this.setState({ editing: !this.state.editing },
+                    () => { this.titleInput.focus(); this.titleInput.setSelectionRange(this.titleInput.value.length,this.titleInput.value.length) }) }}
+                style={{marginRight: 10}}
+              />
+              <DeleteIcon onClick={this.remove.bind(this)}/>
+            </div>
+            <div style={{display: 'flex'}}>
+              <Icon path={mdiCloseCircle} size={1}
+                onClick={() => {this.setState({ editing: false })}}
+                style={{fill: 'white', height: '1.5rem', flexShrink: 0, marginRight: 10}} />
+              <Icon path={mdiCheckCircle} size={1}
+                onClick={this.handleEdit.bind(this)}
+                style={{fill: 'white', height: '1.5rem', flexShrink: 0}} />
+            </div>
+          </div>
         </div>
       </div>
     )
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.editing)
+      this.titleInput.style.height = `${this.titleInput.scrollHeight}px`
   }
 
   remove() {
@@ -102,13 +125,27 @@ const styles = {
     fontSize: 16,
     background: 'none',
     border: 'none',
-    color: 'white'
+    color: 'white',
+    height: 18
+  },
+  actions_wrapper: {
+    flexShrink: 0,
+    marginLeft: 10,
+    height: 25,
+    overflow: 'hidden'
+  },
+  icon: {
+    width: '1em',
+    height: '1em',
+    display: 'inline-block',
+    fontSize: '1.5rem',
+    transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    flexShrink: '0',
+    userSelect: 'none'
   }
 }
 
 const mapStateToProps = state => {
-  console.log('todos are')
-  console.log(state.todos)
   return { todos: state.todos }
 }
 
