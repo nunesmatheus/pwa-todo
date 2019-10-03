@@ -91,7 +91,7 @@ class TodoIndex extends Component {
 
     this.props.todos.map((todo, index) => {
       todo.index = index
-      idbu.insert('todos', todo)
+      return idbu.insert('todos', todo)
     })
   }
 }

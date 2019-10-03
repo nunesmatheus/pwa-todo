@@ -15,8 +15,7 @@
     "@mdi/js": "4.4.95",
     "@mdi/react": "1.2.1",
     "redux": "4.0.4",
-    "react-redux": "7.1.1",
-    "autosize": "4.0.2"
+    "react-redux": "7.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

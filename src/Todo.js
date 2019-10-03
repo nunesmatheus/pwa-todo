@@ -6,7 +6,6 @@ import * as idbu from './IDBUtilities';
 import { connect } from 'react-redux';
 import Icon from '@mdi/react'
 import { mdiCloseCircle, mdiCheckCircle } from '@mdi/js'
-import autosize from 'autosize';
 import { closest } from './utils';
 
 class Todo extends Component {

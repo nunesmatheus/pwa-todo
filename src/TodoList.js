@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
-import iNoBounce from 'inobounce';
 
 const SortableItem = SortableElement(({todo}) => <Todo id={todo.id} title={todo.title} />);
 
