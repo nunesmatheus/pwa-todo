@@ -42,7 +42,7 @@ const styles ={
     overflowY: 'scroll',
     height: '100vh',
     backgroundColor: '#242424',
-    paddingBottom: 90,
+    paddingBottom: 100,
     boxSizing: 'border-box'
   }
 }

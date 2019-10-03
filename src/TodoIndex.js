@@ -73,32 +73,26 @@ class TodoIndex extends Component {
     event.preventDefault()
     const title = this.state.new_todo_title
     idbu.insert('todos', { title: title }).then((idb_id) => {
-      this.setState({
-        todos: [...this.props.todos, { id: idb_id, title: title }],
-        new_todo_title: ''
+      this.setState({ new_todo_title: '' })
+      this.props.dispatch({
+        type: 'SET TODOS',
+        todos: [...this.props.todos, { id: idb_id, title: title }]
       })
+      const todos_wrapper = document.querySelector('.todos')
+      todos_wrapper.scrollTo(0, todos_wrapper.scrollHeight)
     })
   }
 
   onSortEnd({oldIndex, newIndex}) {
-    this.setState(({todos}) => ({
-      todos: arrayMove(todos, oldIndex, newIndex)
-    }), () => {
-      this.props.todos.map((todo, index) => {
-        todo.index = index
-        idbu.insert('todos', todo)
-      })
-    })
-  }
-
-  updateTodo(new_todo) {
-    const todos = this.props.todos.map((todo) => {
-      if(todo.id !== new_todo.id) return todo
-      todo.title = new_todo.title
-      return todo
+    this.props.dispatch({
+      type: 'SET TODOS',
+      todos: arrayMove(this.props.todos, oldIndex, newIndex)
     })
 
-    this.setState({ todos: todos })
+    this.props.todos.map((todo, index) => {
+      todo.index = index
+      idbu.insert('todos', todo)
+    })
   }
 }
 
