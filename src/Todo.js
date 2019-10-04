@@ -10,6 +10,8 @@ import { closest } from './utils';
 
 class Todo extends Component {
 
+  // Add comment to test if JS file changes
+
   constructor(props) {
     super(props)
     this.state = {
