@@ -12,6 +12,10 @@ workbox.routing.registerRoute(
 )
 
 workbox.routing.registerRoute(
+  'sw.js', new workbox.strategies.NetworkFirst()
+)
+
+workbox.routing.registerRoute(
   /\/manifest.json$/,
   new workbox.strategies.StaleWhileRevalidate()
 )
