@@ -124,7 +124,7 @@ class Todo extends Component {
     event.preventDefault()
     const updated_todo = { id: this.props.id, title: this.state.title }
     idbu.insert('todos', updated_todo)
-    this.setState({ editing: false })
+    this.setState({ editing: false, showing_actions: false })
     this.updateTodo(updated_todo)
   }
 
