@@ -87,7 +87,7 @@ const styles = {
     fontSize: 14,
     marginLeft: 16,
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: 'light',
     flexShrink: 0,
     display: 'flex',
     alignItems: 'center'
