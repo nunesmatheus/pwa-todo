@@ -15,6 +15,14 @@ workbox.routing.registerRoute(
   /\/manifest.json$/,
   new workbox.strategies.StaleWhileRevalidate()
 )
+//
+// Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
+workbox.routing.registerRoute(
+  /^https:\/\/fonts\.googleapis\.com/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'google-fonts-stylesheets',
+  })
+);
 
 workbox.routing.registerRoute(
   // Cache image files.
