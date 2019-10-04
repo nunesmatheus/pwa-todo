@@ -44,3 +44,28 @@ input {
 *:focus {
   outline: 0;
 }
+
+.shake {
+  animation: shake 0.43s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 94% {
+    transform: translate3d(0, -1px, 0);
+  }
+
+  24%, 52%, 80% {
+    transform: translate3d(0, 1px, 0);
+  }
+
+  38%, 66% {
+    transform: translate3d(0, -1px, 0);
+  }
+
+/*   40%, 60% { */
+/*     transform: translate3d(0, 1px, 0); */
+/*   } */
+}

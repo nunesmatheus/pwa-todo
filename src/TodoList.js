@@ -27,12 +27,20 @@ class TodoList extends Component {
   render() {
     return(
       <SortableList
+        updateBeforeSortStart={this.shakeTodo.bind(this)}
         lockAxis='y'
         pressThreshold={20}
         pressDelay={200}
         items={this.props.todos}
         onSortEnd={this.props.onSortEnd} />
     )
+  }
+
+  shakeTodo({node, index, collection, isKeySorting}, event) {
+    node.classList.add('shake')
+    setTimeout(() => {
+      node.classList.remove('shake')
+    }, 430)
   }
 }
 
