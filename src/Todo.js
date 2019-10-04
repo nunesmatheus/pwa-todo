@@ -50,7 +50,7 @@ class Todo extends Component {
     return(
       <Draggable weight={3} resetOnDragEnd={true}
         onLimitRelease={this.remove.bind(this)}
-        onLimitReach={() => { this.deleteWrapper.style.backgroundColor = '#e53232' }} limit={230}
+        onLimitReach={() => { this.deleteWrapper.style.backgroundColor = '#e53232' }} limit={180}
         onLimitReced={() => { this.deleteWrapper.style.backgroundColor = '#ee7676' }}>
 
         <div style={{display: 'flex'}}>
