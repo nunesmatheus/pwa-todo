@@ -73,7 +73,7 @@ class Draggable extends Component {
         xOffset: 0, yOffset: 0,
         initialX: null, initialY: null
       }, () => {
-        this.setTranslate(0, this.state.currentY, this.dragItem);
+        this.setTranslate(0, 0, this.dragItem);
       })
     } else {
       this.setState({
@@ -86,7 +86,7 @@ class Draggable extends Component {
   }
 
   drag(e) {
-    if (this.state.active) {
+    if (this.state.active && !this.props.blockDrag) {
       e.preventDefault();
 
       if (e.type === "touchmove") {
