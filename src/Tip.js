@@ -3,7 +3,7 @@ import Icon from '@mdi/react'
 import { mdiLightbulbOnOutline } from '@mdi/js'
 
 const tips = [
-  'Clique na tarefa para visualizar as ações disponíveis',
+  'Clique na tarefa para editar',
   'Segure e arraste as tarefas para reordenar',
   'Remova as tarefas arrastando para a esquerda'
 ]
