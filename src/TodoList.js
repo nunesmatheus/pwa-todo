@@ -29,7 +29,7 @@ class TodoList extends Component {
       <SortableList
         lockAxis='y'
         pressThreshold={20}
-        pressDelay={100}
+        pressDelay={200}
         items={this.props.todos}
         onSortEnd={this.props.onSortEnd} />
     )
