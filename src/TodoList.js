@@ -38,7 +38,6 @@ class TodoList extends Component {
 
 const styles ={
   todos_wrapper: {
-    overflowY: 'scroll',
     boxSizing: 'border-box'
   }
 }

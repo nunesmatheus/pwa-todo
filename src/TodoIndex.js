@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 import * as idbu from './IDBUtilities';
 import { connect } from 'react-redux';
 import Tip from './Tip';
+import iNoBounce from 'inobounce';
 
 class TodoIndex extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class TodoIndex extends Component {
     const form_transform = this.state.show_new_form ? '' : 'translateY(100%)'
     const form_wrapper_style = {...styles.new_form_wrapper, transform: form_transform}
     return(
-      <main style={{height: '100%', backgroundColor: '#242424', paddingBottom: 100}}>
+      <main style={{height: '100%', backgroundColor: '#242424', paddingBottom: 100, boxSizing: 'border-box', overflow: 'scroll'}}>
         <TodoList
           todos={this.props.todos}
           onSortEnd={this.onSortEnd.bind(this)} />
