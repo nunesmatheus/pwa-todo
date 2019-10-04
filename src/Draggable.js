@@ -16,8 +16,11 @@ class Draggable extends Component {
       yOffset: 0,
       initialX: null,
       initialY: null,
-      limit_reach: false
+      limit_reach: false,
+      scrolling: false
     }
+
+    this.resetScrollTimeoutFn = this.resetScrollTimeout.bind(this)
   }
 
   render() {
@@ -31,6 +34,7 @@ class Draggable extends Component {
   }
 
   componentDidMount() {
+    this.scrollInterval = null
     this.container.addEventListener("touchstart", this.dragStart.bind(this), false);
     this.container.addEventListener("touchend", this.dragEnd.bind(this), false);
     this.container.addEventListener("touchmove", this.drag.bind(this), false);
@@ -38,8 +42,26 @@ class Draggable extends Component {
     this.container.addEventListener("mousedown", this.dragStart.bind(this), false);
     this.container.addEventListener("mouseup", this.dragEnd.bind(this), false);
     this.container.addEventListener("mousemove", this.drag.bind(this), false);
+
+    document.querySelector('main').addEventListener('scroll', (event) => {
+      if(this.scrollInterval) {
+        clearTimeout(this.scrollInterval)
+      }
+
+      if(this.state.scrolling) return
+
+      event.target.removeEventListener('touchend', this.resetScrollTimeoutFn)
+      event.target.removeEventListener('mouseup', this.resetScrollTimeoutFn)
+      event.target.addEventListener('touchend', this.resetScrollTimeoutFn)
+      event.target.addEventListener('mouseup', this.resetScrollTimeoutFn)
+      this.setState({ scrolling: true })
+    })
   }
 
+  resetScrollTimeout() {
+    this.setState({ scrolling: false })
+    this.scrollInterval = null
+  }
 
   dragStart(e) {
     if (e.type === "touchstart") {
@@ -86,9 +108,7 @@ class Draggable extends Component {
   }
 
   drag(e) {
-    if (this.state.active && !this.props.blockDrag) {
-      e.preventDefault();
-
+    if (this.state.active && !this.blockDrag()) {
       if (e.type === "touchmove") {
         this.setState({
           currentX: e.touches[0].clientX - this.state.initialX,
@@ -125,6 +145,10 @@ class Draggable extends Component {
   setTranslate(xPos, yPos, el) {
     const weight = this.props.weight || 1
     el.style.transform = "translateX(" + xPos/weight + "px)";
+  }
+
+  blockDrag() {
+    return this.props.blockDrag || this.state.scrolling
   }
 }
 

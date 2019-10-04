@@ -12,7 +12,7 @@ const SortableList = SortableContainer(({items, blockDrag}) => {
         <SortableItem key={`item-${index}`} index={index} todo={todo} blockDrag={blockDrag} />
       ))}
     </div>
-  );
+  )
 });
 
 class TodoList extends Component {
