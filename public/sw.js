@@ -7,7 +7,7 @@ workbox.routing.registerRoute(
 )
 
 workbox.routing.registerRoute(
-  /\.(?:css|js)$/,
+  /^((?!\/static).)*(?:css|js)$/,
   new workbox.strategies.StaleWhileRevalidate()
 )
 
