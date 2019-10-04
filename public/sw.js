@@ -8,11 +8,12 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
   /\.(?:css|js)$/,
-  new workbox.strategies.CacheFirst()
+  new workbox.strategies.StaleWhileRevalidate()
 )
 
 workbox.routing.registerRoute(
-  'sw.js', new workbox.strategies.NetworkFirst()
+  /\/static\/.*js$/,
+  new workbox.strategies.CacheFirst()
 )
 
 workbox.routing.registerRoute(
