@@ -24,7 +24,7 @@ class TodoIndex extends Component {
     const form_wrapper_style = {...styles.new_form_wrapper, transform: form_transform}
     return(
       <main style={{height: '100%', backgroundColor: '#242424', paddingBottom: 100, boxSizing: 'border-box', overflow: 'scroll', WebkitOverflowScrolling: 'touch'}}>
-        <a href="javascript:top.frames.location.reload();">refresh</a>
+        <a href="javascript:top.frames.location.reload();">atualizar</a>
 
         <TodoList
           todos={this.props.todos}
