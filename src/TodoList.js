@@ -7,6 +7,7 @@ const SortableItem = SortableElement(({todo}) => <Todo id={todo.id} title={todo.
 const SortableList = SortableContainer(({items}) => {
   return (
     <div className="todos" style={styles.todos_wrapper}>
+      <a href="javascript:top.frames.location.reload();">atualizar</a>
       {items.map((todo, index) => (
         <SortableItem key={`item-${index}`} index={index} todo={todo} />
       ))}
