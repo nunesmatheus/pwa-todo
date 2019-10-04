@@ -4,7 +4,8 @@ import { mdiLightbulbOnOutline } from '@mdi/js'
 
 const tips = [
   'Clique na tarefa para visualizar as ações disponíveis',
-  'Segure e arraste a tarefa para reordenar'
+  'Segure e arraste as tarefas para reordenar',
+  'Remova as tarefas arrastando para a esquerda'
 ]
 
 class Tip extends Component {

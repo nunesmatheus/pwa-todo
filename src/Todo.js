@@ -59,7 +59,7 @@ class Todo extends Component {
           >
             <span style={title_style}>{this.props.title}</span>
 
-            <form onSubmit={this.handleEdit.bind(this)} style={{flexGrow: 1}}>
+            <form onSubmit={this.handleEdit.bind(this)} style={this.state.editing ? {flexGrow: 1} : {}}>
               <textarea
                 ref={(input) => {this.titleInput = input}}
                 type="text" style={{...styles.input, ...input_style, padding: 0, resize: 'none'}}
@@ -72,9 +72,8 @@ class Todo extends Component {
               <div style={actions_style}>
                 <div style={{display: 'flex'}}>
                   <EditIcon onClick={() => { this.executeAction(this.enableEdit.bind(this)) }}
-                    style={{marginRight: 10}}
+                    style={{marginRight: 10, transform: 'translateX(34px)'}}
                   />
-                  <DeleteIcon onClick={() => { this.executeAction(this.remove.bind(this)) }} />
                 </div>
                 <div style={{display: 'flex'}}>
                   <Icon path={mdiCloseCircle} size={1}
@@ -172,7 +171,8 @@ const styles = {
     willChange: 'height, padding',
     overflow: 'hidden',
     flexShrink: 0,
-    width: '100%'
+    width: '100%',
+    boxSizing: 'border-box'
   },
   input: {
     fontSize: 16,
