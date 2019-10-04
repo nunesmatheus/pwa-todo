@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Icon from '@mdi/react'
 import { mdiCloseCircle, mdiCheckCircle } from '@mdi/js'
 import { closest } from './utils';
+import Draggable from './Draggable';
 
 class Todo extends Component {
 
@@ -47,53 +48,52 @@ class Todo extends Component {
       actions_style = {...actions_style, opacity: 1}
 
     return(
-      <div className="todo" style={style} onClick={this.toggleActions.bind(this)}
-        ref={(ref) => this.todo = ref}
-      >
-        <span style={title_style}>{this.props.title}</span>
+      <Draggable weight={3} resetOnDragEnd={true}
+        onLimitRelease={this.remove.bind(this)}
+        onLimitReach={() => { this.deleteWrapper.style.backgroundColor = '#e53232' }} limit={230}
+        onLimitReced={() => { this.deleteWrapper.style.backgroundColor = '#ee7676' }}>
 
-        <form onSubmit={this.handleEdit.bind(this)} style={{flexGrow: 1}}>
-          <textarea
-            ref={(input) => {this.titleInput = input}}
-            type="text" style={{...styles.input, ...input_style, padding: 0, resize: 'none'}}
-            onChange={(event) => { this.setState({ title: event.target.value }) }}
-            value={this.state.title} />
-          <input type="submit" value="Editar" style={{display: 'none'}} />
-        </form>
+        <div style={{display: 'flex'}}>
+          <div className="todo" style={style} onClick={this.toggleActions.bind(this)}
+            ref={(ref) => this.todo = ref}
+          >
+            <span style={title_style}>{this.props.title}</span>
 
-        <div style={styles.actions_wrapper} className="actions-wrapper">
-          <div style={actions_style}>
-            <div style={{display: 'flex'}}>
-              <EditIcon onClick={() => { this.executeAction(this.enableEdit.bind(this)) }}
-                style={{marginRight: 10}}
-              />
-              <DeleteIcon onClick={() => { this.executeAction(this.remove.bind(this)) }} />
-            </div>
-            <div style={{display: 'flex'}}>
-              <Icon path={mdiCloseCircle} size={1}
-                onClick={() => { this.executeAction(this.cancelEdit.bind(this)) }}
-                style={{fill: 'white', height: '1.5rem', flexShrink: 0, marginRight: 10}} />
-              <Icon path={mdiCheckCircle} size={1}
-                onClick={(event) => { this.executeAction(this.handleEdit.bind(this), event) }}
-                style={{fill: 'white', height: '1.5rem', flexShrink: 0}} />
+            <form onSubmit={this.handleEdit.bind(this)} style={{flexGrow: 1}}>
+              <textarea
+                ref={(input) => {this.titleInput = input}}
+                type="text" style={{...styles.input, ...input_style, padding: 0, resize: 'none'}}
+                onChange={(event) => { this.setState({ title: event.target.value }) }}
+                value={this.state.title} />
+              <input type="submit" value="Editar" style={{display: 'none'}} />
+            </form>
+
+            <div style={styles.actions_wrapper} className="actions-wrapper">
+              <div style={actions_style}>
+                <div style={{display: 'flex'}}>
+                  <EditIcon onClick={() => { this.executeAction(this.enableEdit.bind(this)) }}
+                    style={{marginRight: 10}}
+                  />
+                  <DeleteIcon onClick={() => { this.executeAction(this.remove.bind(this)) }} />
+                </div>
+                <div style={{display: 'flex'}}>
+                  <Icon path={mdiCloseCircle} size={1}
+                    onClick={() => { this.executeAction(this.cancelEdit.bind(this)) }}
+                    style={{fill: 'white', height: '1.5rem', flexShrink: 0, marginRight: 10}} />
+                  <Icon path={mdiCheckCircle} size={1}
+                    onClick={(event) => { this.executeAction(this.handleEdit.bind(this), event) }}
+                    style={{fill: 'white', height: '1.5rem', flexShrink: 0}} />
+                </div>
+              </div>
             </div>
           </div>
+          <div style={styles.delete_wrapper} ref={(ref) => this.deleteWrapper = ref}>
+            <DeleteIcon style={{fill: 'white'}} />
+          </div>
         </div>
-      </div>
+      </Draggable>
     )
   }
-
-  componentDidMount() {
-    this.container = document.querySelector(".todos");
-    this.container.addEventListener("touchstart", this.dragStart.bind(this), false);
-    this.container.addEventListener("touchend", this.dragEnd.bind(this), false);
-    this.container.addEventListener("touchmove", this.drag.bind(this), false);
-
-    this.container.addEventListener("mousedown", this.dragStart.bind(this), false);
-    this.container.addEventListener("mouseup", this.dragEnd.bind(this), false);
-    this.container.addEventListener("mousemove", this.drag.bind(this), false);
-  }
-
 
   componentDidUpdate(prevProps, prevState) {
     if(this.state.editing)
@@ -155,64 +155,6 @@ class Todo extends Component {
     })
     this.props.dispatch({ type: 'SET TODOS', todos: todos })
   }
-
-  dragStart(e) {
-    if (e.type === "touchstart") {
-      this.setState({
-        initialX: e.touches[0].clientX - this.state.xOffset,
-        initialY: e.touches[0].clientY - this.state.yOffset
-      })
-    } else {
-      this.setState({
-        initialX: e.clientX - this.state.xOffset,
-        initialY: e.clientY - this.state.yOffset
-      })
-    }
-
-    if (e.target == this.todo || closest(e.target, '.todo')) {
-        this.state.active = true;
-      }
-    }
-
-    dragEnd(e) {
-      this.setState({
-        initialX: this.state.currentX,
-        initialY: this.state.currentY
-      })
-
-      this.setState({ active: false })
-    }
-
-    drag(e) {
-      if (this.state.active) {
-
-        e.preventDefault();
-
-        if (e.type === "touchmove") {
-          this.setState({
-            currentX: e.touches[0].clientX - this.state.initialX,
-            currentY: e.touches[0].clientY - this.state.initialY
-          })
-        } else {
-          this.setState({
-            currentX: e.clientX - this.state.initialX,
-            currentY: e.clientY - this.state.initialY
-          })
-        }
-
-        this.setState({
-          xOffset: this.state.currentX,
-          yOffset: this.state.currentY
-        })
-
-        this.setTranslate(this.state.currentX, this.state.currentY, this.todo);
-      }
-    }
-
-    setTranslate(xPos, yPos, el) {
-      // el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-      el.style.transform = "translateX(" + xPos/3 + "px)";
-    }
 }
 
 const styles = {
@@ -228,7 +170,9 @@ const styles = {
     transition: 'height 0.1s ease-out',
     transitionProperty: 'height, padding',
     willChange: 'height, padding',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    flexShrink: 0,
+    width: '100%'
   },
   input: {
     fontSize: 16,
@@ -262,6 +206,16 @@ const styles = {
     willChange: 'fill',
     flexShrink: '0',
     userSelect: 'none'
+  },
+  delete_wrapper: {
+    width: '100%',
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: 10,
+    transition: '0.05s background-color linear',
+    willChange: 'background-color',
+    backgroundColor: '#ee7676'
   }
 }
 
