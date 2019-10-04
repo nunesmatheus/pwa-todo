@@ -22,7 +22,7 @@ class Draggable extends Component {
 
   render() {
     return(
-      <div ref={(ref) => this.container = ref} className="drag-container">
+      <div style={this.props.style} ref={(ref) => this.container = ref} className="drag-container">
         <div ref={(ref) => this.dragItem = ref}>
           {this.props.children}
         </div>

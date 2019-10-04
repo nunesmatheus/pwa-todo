@@ -30,8 +30,8 @@ class Todo extends Component {
 
   render() {
     const height = this.state.hide ? 0 : 'auto'
-    const style = {...styles.todo, height: height}
-    if(this.state.hide) style.padding = '0 14px'
+    const drag_container_style = {width: '100%', height: height}
+    if(this.state.hide) drag_container_style.padding = '0 14px'
     let input_style, title_style
     if(this.state.editing) {
       title_style = { display: 'none' }
@@ -52,11 +52,11 @@ class Todo extends Component {
         onLimitRelease={this.remove.bind(this)}
         onLimitReach={() => { this.deleteWrapper.style.backgroundColor = '#e53232' }} limit={180}
         onLimitReced={() => { this.deleteWrapper.style.backgroundColor = '#ee7676' }}
-        blockDrag={this.props.blockDrag}
+        blockDrag={this.props.blockDrag} style={drag_container_style}
       >
 
         <div style={{display: 'flex'}}>
-          <div className="todo" style={style} onClick={this.toggleActions.bind(this)}
+          <div className="todo" style={styles.todo} onClick={this.toggleActions.bind(this)}
             ref={(ref) => this.todo = ref}
           >
             <span style={title_style}>{this.props.title}</span>
