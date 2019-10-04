@@ -42,11 +42,11 @@ class Tip extends Component {
   }
 
   componentDidMount() {
-    this.tipWrapper.style.height = `${this.currentTipRef.offsetHeight}px`
     if(this.currentTipRef.offsetHeight > this.nextTipRef.offsetHeight)
       this.nextTipRef.style.height = `${this.currentTipRef.offsetHeight}px`
     else
       this.currentTipRef.style.height = `${this.nextTipRef.offsetHeight}px`
+    this.tipWrapper.style.height = `${this.currentTipRef.offsetHeight}px`
   }
 
   nextTip() {
