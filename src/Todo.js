@@ -29,9 +29,11 @@ class Todo extends Component {
   }
 
   render() {
-    const height = this.state.hide ? 0 : 'auto'
-    const drag_container_style = {width: '100%', height: height}
-    if(this.state.hide) drag_container_style.padding = '0 14px'
+    const height = this.state.hide ? 0 : '66px'
+    let drag_container_style = styles.drag_container
+    drag_container_style = {...drag_container_style, height: height}
+    if(this.state.hide)
+      drag_container_style = {...drag_container_style, padding: '0 14px'}
     let input_style, title_style
     if(this.state.editing) {
       title_style = { display: 'none' }
@@ -49,8 +51,8 @@ class Todo extends Component {
 
     return(
       <Draggable weight={3} resetOnDragEnd={true}
-        onLimitRelease={this.remove.bind(this)}
-        onLimitReach={() => { this.deleteWrapper.style.backgroundColor = '#e53232' }} limit={180}
+        onLimitRelease={this.remove.bind(this)} limit={180}
+        onLimitReach={() => { this.deleteWrapper.style.backgroundColor = '#e53232' }}
         onLimitReced={() => { this.deleteWrapper.style.backgroundColor = '#ee7676' }}
         blockDrag={this.props.blockDrag} style={drag_container_style}
       >
@@ -168,9 +170,6 @@ const styles = {
     backgroundColor: '#1d1d1d',
     borderBottom: '1px solid #242424',
     color: 'white',
-    transition: 'height 0.1s ease-out',
-    transitionProperty: 'height, padding',
-    willChange: 'height, padding',
     overflow: 'hidden',
     flexShrink: 0,
     width: '100%',
@@ -218,6 +217,14 @@ const styles = {
     transition: '0.05s background-color linear',
     willChange: 'background-color',
     backgroundColor: '#ee7676'
+  },
+  drag_container: {
+    width: '100%',
+    transitionProperty: 'height, padding',
+    transitionDuration: '0.1s',
+    transitionTimingFunction: 'ease-out',
+    willChange: 'height, padding',
+    overflow: 'hidden'
   }
 }
 
