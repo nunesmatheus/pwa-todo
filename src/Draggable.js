@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Icon from '@mdi/react'
-import { mdiLightbulbOnOutline } from '@mdi/js'
 import { closest } from './utils';
 
 class Draggable extends Component {
@@ -78,8 +76,8 @@ class Draggable extends Component {
       })
     }
 
-    if (e.target == this.dragItem || closest(e.target, '.drag-container')) {
-      this.state.active = true;
+    if (e.target === this.dragItem || closest(e.target, '.drag-container')) {
+      this.setState({ active: true })
     }
   }
 

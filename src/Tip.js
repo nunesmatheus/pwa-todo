@@ -13,9 +13,7 @@ class Tip extends Component {
   constructor(props) {
     super(props)
 
-    let available_tips = [...tips]
     const tip = this.randomFrom(tips)
-    const tip_index = tips.indexOf(tip)
     let next_available_tips = [...tips]
     const next_tip_index = tips.indexOf(tip)
     next_available_tips.splice(next_tip_index, 1)

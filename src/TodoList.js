@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
-import { closest } from './utils';
 
 const SortableItem = SortableElement(({todo, blockDrag}) => <Todo id={todo.id} title={todo.title} blockDrag={blockDrag} />);
 
