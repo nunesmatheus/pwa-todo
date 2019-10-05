@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { openDB } from 'idb';
 import TodoList from './TodoList';
-import arrayMove from 'array-move';
 import './TodoIndex.css';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
@@ -25,7 +24,7 @@ class TodoIndex extends Component {
     return(
       <main style={{height: '100%', backgroundColor: '#242424', paddingBottom: 100, boxSizing: 'border-box', overflow: 'scroll', WebkitOverflowScrolling: 'touch'}}>
         <TodoList
-          todos={this.props.todos}
+          todos={this.props.todos.sort((a,b) => a.index - b.index)}
           onSortEnd={this.onSortEnd.bind(this)} />
 
         <Tip />
@@ -75,15 +74,27 @@ class TodoIndex extends Component {
   }
 
   onSortEnd({oldIndex, newIndex}) {
-    this.props.dispatch({
-      type: 'SET TODOS',
-      todos: arrayMove(this.props.todos, oldIndex, newIndex)
-    })
+    let intermediate_index
+    if(newIndex < oldIndex)
+      intermediate_index = newIndex - 0.1
+    else
+      intermediate_index = newIndex + 0.1
 
-    this.props.todos.map((todo, index) => {
+    const new_todos = this.props.todos.map((todo) => {
+      if(todo.index == oldIndex) {
+        todo.index = intermediate_index
+      }
+      return todo
+    }).sort((a,b) => a.index - b.index)
+
+    this.props.dispatch({ type: 'SET TODOS', todos: new_todos })
+
+    const db_promises = new_todos.map((todo, index) => {
       todo.index = index
       return idbu.insert('todos', todo)
     })
+
+    return Promise.all(db_promises)
   }
 }
 
