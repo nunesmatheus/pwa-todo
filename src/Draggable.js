@@ -108,6 +108,8 @@ class Draggable extends Component {
   }
 
   drag(e) {
+    e.preventDefault()
+
     if (this.state.active && !this.blockDrag()) {
       if (e.type === "touchmove") {
         this.setState({
