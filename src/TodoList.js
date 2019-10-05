@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import { closest } from './utils';
 
 const SortableItem = SortableElement(({todo, blockDrag}) => <Todo id={todo.id} title={todo.title} blockDrag={blockDrag} />);
 
@@ -40,10 +41,9 @@ class TodoList extends Component {
   }
 
   shakeTodo({node, index, collection, isKeySorting}, event) {
-    node.classList.add('shake')
-    setTimeout(() => {
-      node.classList.remove('shake')
-    }, 430)
+    const todo = node.querySelector('.todo')
+    todo.classList.add('shake')
+    setTimeout(() => { todo.classList.remove('shake') }, 430)
   }
 
   onSortEnd({oldIndex, newIndex}) {
