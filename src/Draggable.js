@@ -108,7 +108,7 @@ class Draggable extends Component {
   }
 
   drag(e) {
-    if(this.state.currentX) e.preventDefault()
+    if(this.state.currentX && this.state.currentX > 20) e.preventDefault()
 
     if (this.state.active && !this.blockDrag()) {
       if (e.type === "touchmove") {
