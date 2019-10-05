@@ -9,7 +9,7 @@ const SortableList = SortableContainer(({items, blockDrag}) => {
     <div className="todos" style={styles.todos_wrapper}>
       <a href="javascript:top.frames.location.reload();">atualizar</a>
       {items.map((todo, index) => (
-        <SortableItem key={`item-${index}`} index={index} todo={todo} blockDrag={blockDrag} />
+        <SortableItem key={`item-${todo.id}`} index={index} todo={todo} blockDrag={blockDrag} />
       ))}
     </div>
   )
@@ -19,7 +19,6 @@ class TodoList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      todos: [],
       new_todo_title: '',
       show_new_form: false,
       block_drag: false

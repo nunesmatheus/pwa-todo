@@ -54,20 +54,7 @@ class TodoIndex extends Component {
   }
 
   componentDidMount() {
-    const db = openDB('pwa_todo', 5, {
-      upgrade(db, oldVersion, newVersion, transaction) {
-        if(!db.objectStoreNames.contains('todos'))
-          db.createObjectStore('todos', {keyPath: 'id', autoIncrement: true})
-      }
-    })
-
-    db.then((db) => {
-      if(!db.objectStoreNames.contains('todos'))
-        return []
-      const tx = db.transaction('todos')
-      const store = tx.objectStore('todos')
-      return store.getAll()
-    }).then((todos) => {
+    idbu.getAll().then((todos) => {
       todos.sort((a,b) => a.index - b.index)
       this.props.dispatch({ type: 'SET TODOS', todos: todos })
     })

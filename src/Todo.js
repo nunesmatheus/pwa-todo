@@ -33,7 +33,7 @@ class Todo extends Component {
     let drag_container_style = styles.drag_container
     drag_container_style = {...drag_container_style, height: height}
     if(this.state.hide)
-      drag_container_style = {...drag_container_style, padding: '0 14px'}
+      drag_container_style = {...drag_container_style, padding: 0}
     let input_style, title_style
     if(this.state.editing) {
       title_style = { display: 'none' }
@@ -136,9 +136,14 @@ class Todo extends Component {
     db.then((db) => {
       const tx = db.transaction('todos', 'readwrite')
       const store = tx.objectStore('todos')
-      store.delete(this.props.id)
+      return store.delete(this.props.id)
     }).then(() => {
       this.setState({ hide: true })
+      setTimeout(() => {
+        idbu.getAll().then((todos) => {
+          this.props.dispatch({type: 'SET TODOS', todos: todos})
+        })
+      }, 200)
     })
   }
 
