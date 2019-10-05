@@ -143,7 +143,7 @@ class Todo extends Component {
         idbu.getAll().then((todos) => {
           this.props.dispatch({type: 'SET TODOS', todos: todos})
         })
-      }, 200)
+      }, 300)
     })
   }
 
