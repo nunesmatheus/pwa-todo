@@ -29,7 +29,7 @@ class TodoList extends Component {
   render() {
     return(
       <SortableList
-        updateBeforeSortStart={() => { this.setState({ block_drag: true }); this.shakeTodo.bind(this)}}
+        updateBeforeSortStart={(data, event) => { this.setState({ block_drag: true }); this.shakeTodo(data, event) }}
         blockDrag={this.state.block_drag}
         lockAxis='y'
         pressThreshold={20}
