@@ -35,7 +35,7 @@ class TodoIndex extends Component {
         ><AddIcon style={{fill: 'white', fontSize: 30}} /></span>
 
         <div style={form_wrapper_style}>
-          <form onSubmit={this.handleSubmit.bind(this)} style={styles.new_form}>
+          <form onSubmit={this.handleSubmit.bind(this)} style={styles.new_form} ref={(ref) => { this.newTodoForm = ref }}>
             <div style={{display: 'flex'}}>
               <input
                 ref={(input) => {this.todoTitleInput = input}}
@@ -45,7 +45,7 @@ class TodoIndex extends Component {
               <CloseIcon style={{fill: 'white', marginLeft: 10}}
                 onClick={() => { this.setState({ show_new_form: false }) }} />
             </div>
-            <input type="submit" value="Adicionar" style={styles.add_button} />
+            <button style={styles.add_button} onClick={this.handleSubmit.bind(this)}>Adicionar</button>
           </form>
         </div>
       </main>

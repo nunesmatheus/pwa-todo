@@ -2,26 +2,22 @@ import { deleteDB } from 'idb';
 
 context('Delete TODO', () => {
   afterEach(() => {
-    deleteDB('pwa_todo')
+    window.indexedDB.deleteDatabase('pwa_todo')
+    cy.wait(300)
   })
 
   it('-', () => {
-    deleteDB('pwa_todo')
     cy.visit('http://localhost:3000')
-    cy.wait(200)
+    cy.wait(300)
+    cy.insert('todos', { title: 'Primeira TODO', index: 0 })
+      .then(() => { cy.visit('http://localhost:3000') })
 
-    const todo_text = 'Primeira TODO'
-    const promise = cy.insert(
-      'todos', { title: todo_text, index: 0 })
-
-    promise.then(() => { cy.visit('http://localhost:3000') })
-
-    cy.contains(todo_text).should('be.visible')
+    cy.contains('Primeira TODO').should('be.visible')
     cy.get('.todo')
       .trigger('mousedown', { which: 1 })
       .trigger('mousemove', { clientX: 100, clientY: 40 })
       .trigger('mouseup', {force: true})
 
-    cy.contains(todo_text).should('not.be.visible')
+    cy.contains('Primeira TODO').should('not.be.visible')
   })
 })

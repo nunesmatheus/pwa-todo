@@ -2,7 +2,8 @@ import { deleteDB } from 'idb';
 
 context('Create todo', () => {
   afterEach(() => {
-    deleteDB('pwa_todo')
+    window.indexedDB.deleteDatabase('pwa_todo')
+    cy.wait(300)
   })
 
   // https://on.cypress.io/interacting-with-elements

@@ -24,8 +24,12 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import { insert } from '../../src/IDBUtilities';
+import { insert, getAll } from '../../src/IDBUtilities';
 
 Cypress.Commands.add('insert', (object_store, todo) => {
-  insert(object_store, todo)
+  return insert(object_store, todo)
+})
+
+Cypress.Commands.add('getAll', (object_store) => {
+  return getAll(object_store)
 })
