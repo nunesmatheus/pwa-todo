@@ -25,13 +25,12 @@ context('Create todo', () => {
     promises.push(
       cy.insert('todos', { title: 'Primeira TODO', index: 0 }))
     promises.push(
-      cy.insert('todos', { title: 'Segunda TODO', index: 0 }))
+      cy.insert('todos', { title: 'Segunda TODO', index: 1 }))
     promises.push(
-      cy.insert('todos', { title: 'Terceira TODO', index: 0 }))
+      cy.insert('todos', { title: 'Terceira TODO', index: 2 }))
 
-    Promise.all(promises).then(() => {
-      cy.visit('http://localhost:3000')
-    })
+    cy.wait(300)
+    cy.visit('http://localhost:3000')
 
     cy.get('.todos').contains('Nova TODO').should('not.be.visible')
     cy.get('#new-todo-btn').click()
