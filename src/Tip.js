@@ -30,7 +30,7 @@ class Tip extends Component {
       <div style={styles.tip_wrapper} onClick={this.nextTip.bind(this)}>
         <Icon path={mdiLightbulbOnOutline} size={1}
               style={{fill: 'white'}} />
-        <div style={{overflow: 'hidden'}} ref={(ref) => this.tipWrapper = ref}>
+        <div style={{height: '28px', overflow: 'hidden'}}>
           <div style={{display: 'flex', flexDirection: 'column', transition: 'transform 0.1s ease-out', willChange: 'transform'}} ref={(ref) => this.currentTipInnerWrapper = ref}>
             <span ref={(ref) => this.currentTipRef = ref} style={styles.tip}>{this.state.tip}</span>
             <span ref={(ref) => this.nextTipRef = ref} style={styles.tip}>{this.state.next_tip}</span>
@@ -40,20 +40,11 @@ class Tip extends Component {
     )
   }
 
-  componentDidMount() {
-    if(this.currentTipRef.offsetHeight > this.nextTipRef.offsetHeight)
-      this.nextTipRef.style.height = `${this.currentTipRef.offsetHeight}px`
-    else
-      this.currentTipRef.style.height = `${this.nextTipRef.offsetHeight}px`
-    this.tipWrapper.style.height = `${this.currentTipRef.offsetHeight}px`
-  }
-
   nextTip() {
     let available_tips = [...tips]
     const current_tip_index = tips.indexOf(this.state.next_tip)
     available_tips.splice(current_tip_index, 1)
     let tip = this.randomFrom(available_tips)
-    this.tipWrapper.style.height = `${this.nextTipRef.offsetHeight}px`
     this.currentTipInnerWrapper.style.transform = `translateY(-${this.currentTipRef.offsetHeight}px)`
     setTimeout(() => {
       this.currentTipInnerWrapper.style.transition = 'none'
@@ -63,11 +54,6 @@ class Tip extends Component {
         this.currentTipInnerWrapper.style.transition = 'transform 0.1s ease-out'
       })
     }, 100)
-
-    if(this.currentTipRef.offsetHeight > this.nextTipRef.offsetHeight)
-      this.nextTipRef.style.height = `${this.currentTipRef.offsetHeight}px`
-    else
-      this.currentTipRef.style.height = `${this.nextTipRef.offsetHeight}px`
   }
 
   randomFrom(array) {
@@ -88,7 +74,9 @@ const styles = {
     fontWeight: 'light',
     flexShrink: 0,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: '28px',
+    lineHeight: '14px'
   }
 }
 
