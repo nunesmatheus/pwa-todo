@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { openDB } from 'idb';
 import TodoList from './TodoList';
 import './TodoIndex.css';
 import CloseIcon from '@material-ui/icons/Close';
@@ -30,6 +29,7 @@ class TodoIndex extends Component {
         <Tip />
 
         <span
+          id="new-todo-btn"
           onClick={() => {this.setState({ show_new_form: true }); this.todoTitleInput.focus()}}
           style={styles.open_form_button}
         ><AddIcon style={{fill: 'white', fontSize: 30}} /></span>
